@@ -62,7 +62,7 @@ const TAB_GROUPS = [
   },
 ]
 
-export default function DashboardTabs({ ticker, stockData }) {
+export default function DashboardTabs({ ticker, stockData, overview, chart }) {
   const [activeGroup, setActiveGroup] = useState('fundamentals')
   const [activeTab, setActiveTab]     = useState('financials')
   const [visited, setVisited]         = useState(new Set(['financials']))
@@ -88,32 +88,39 @@ export default function DashboardTabs({ ticker, stockData }) {
 
   return (
     <div className="dashboard-tabs">
-      {/* Group row */}
-      <div className="tab-group-row">
-        {TAB_GROUPS.map(g => (
-          <button
-            key={g.key}
-            type="button"
-            className={`tab-group-btn ${activeGroup === g.key ? 'active' : ''}`}
-            onClick={() => activateGroup(g.key)}
-          >
-            {g.label}
-          </button>
-        ))}
-      </div>
+      {/* Chart and overview sit above the sticky tab header */}
+      {chart}
+      {overview}
 
-      {/* Tab row — only current group's tabs */}
-      <div className="tab-items-row">
-        {currentGroup?.tabs.map(tab => (
-          <button
-            key={tab.key}
-            type="button"
-            className={`fin-tab ${activeTab === tab.key ? 'active' : ''}`}
-            onClick={() => activateTab(tab.key)}
-          >
-            {tab.label}
-          </button>
-        ))}
+      {/* Sticky tab header */}
+      <div className="tab-header-sticky">
+        {/* Group row */}
+        <div className="tab-group-row">
+          {TAB_GROUPS.map(g => (
+            <button
+              key={g.key}
+              type="button"
+              className={`tab-group-btn ${activeGroup === g.key ? 'active' : ''}`}
+              onClick={() => activateGroup(g.key)}
+            >
+              {g.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab row — only current group's tabs */}
+        <div className="tab-items-row">
+          {currentGroup?.tabs.map(tab => (
+            <button
+              key={tab.key}
+              type="button"
+              className={`fin-tab ${activeTab === tab.key ? 'active' : ''}`}
+              onClick={() => activateTab(tab.key)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* ── FUNDAMENTALS ── */}

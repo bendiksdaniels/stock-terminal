@@ -938,7 +938,15 @@ html, body {
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: clip;
+}
+
+.tab-header-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
 }
 .dashboard-tabs > .financials-nav {
   background: var(--bg3);
@@ -981,7 +989,6 @@ html, body {
   display: flex;
   gap: 0;
   padding: 0;
-  border-bottom: 1px solid var(--border);
   background: var(--bg2);
 }
 .dashboard-tabs .fin-tab {

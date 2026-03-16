@@ -110,15 +110,7 @@ export default function App() {
           <button type="button" className={'nav-btn ' + (screen === 'portfolios' ? 'active' : '')} onClick={() => setScreen(s => s === 'portfolios' ? 'terminal' : 'portfolios')}>
             &#9672; PORTFOLIOS
           </button>
-          <button
-            onClick={() => setShowAlerts(true)}
-            style={{
-              background: 'none', border: '1px solid var(--border)',
-              color: 'var(--muted)', padding: '5px 12px',
-              borderRadius: 'var(--radius)', cursor: 'pointer', fontSize: 12,
-              position: 'relative',
-            }}
-          >
+          <button type="button" className={'nav-btn' + (alertCount > 0 ? ' alerts-active' : '')} onClick={() => setShowAlerts(true)} style={{ position: 'relative' }}>
             ALERTS
             {alertCount > 0 && (
               <span style={{
@@ -130,23 +122,13 @@ export default function App() {
               }}>{alertCount}</span>
             )}
           </button>
-          <button className="theme-toggle" onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} title="Toggle light/dark mode">
+          <button type="button" className="nav-btn" onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}>
             {theme === 'dark' ? '☀ LIGHT' : '☾ DARK'}
           </button>
           <div className={`market-badge ${marketOpen ? 'open' : 'closed'}`}>
             <span className="market-dot" />
             {marketOpen ? 'MARKET OPEN' : 'MARKET CLOSED'}
           </div>
-          {stockData && (
-            <div className="header-ticker-info">
-              <span className="header-ticker-name">{stockData.name}</span>
-              <span className="header-ticker-sym">{currentTicker}</span>
-              <span className={`header-ticker-price ${changePos ? 'positive' : 'negative'}`}>
-                ${stockData.price?.toFixed(2)}
-                &ensp;{changePos ? '▲' : '▼'} {Math.abs(stockData.change_percent)?.toFixed(2)}%
-              </span>
-            </div>
-          )}
         </div>
       </header>
 
@@ -201,9 +183,7 @@ export default function App() {
                   ) : null}
                 </div>
 
-                {!loadingStock && stockData && <StockOverview data={stockData} />}
-                {currentTicker && <PriceChart ticker={currentTicker} currentPrice={stockData?.price} />}
-                {currentTicker && <DashboardTabs ticker={currentTicker} stockData={stockData} />}
+                {currentTicker && <DashboardTabs ticker={currentTicker} stockData={stockData} overview={!loadingStock && stockData ? <StockOverview data={stockData} /> : null} chart={<PriceChart ticker={currentTicker} currentPrice={stockData?.price} />} />}
               </div>
             )}
 
